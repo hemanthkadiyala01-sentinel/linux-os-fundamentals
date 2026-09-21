@@ -17,8 +17,10 @@ Get-Service -Name 'Wazuh*' | Select-Object Name, DisplayName, Status, StartType
 Get-Item 'C:\Program Files (x86)\ossec-agent\wazuh-agent.state'
 ```
 
+## Manager-side verification
+
+An authorized manager query on 2026-09-21 confirmed agent `001` as **Active**. It identified the endpoint as Windows 11 Pro running Wazuh 4.14.7 and showed a recent completed file-integrity-monitoring scan. IP addresses, hashes, and raw log lines are intentionally not committed.
+
 ## Limitation
 
-The agent log was protected from the account used for this assessment. Do not
-claim enrollment or manager delivery until an authorized administrator confirms
-both the endpoint log and manager registration.
+The regular Windows account could not read the protected agent log. Manager connectivity is verified, but a new controlled event has not yet been confirmed in the Wazuh dashboard.

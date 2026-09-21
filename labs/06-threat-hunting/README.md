@@ -20,6 +20,4 @@ compromise from a single failure.
 
 Question: Is the endpoint agent able to provide monitoring coverage? Source:
 Windows service state, agent-state timestamp, agent log, and manager agent
-status. Only the first two sources were available in this sprint. The service
-was running, but delivery is **unverified** pending authorized access to the
-agent and manager logs.
+status. An authorized manager query confirmed agent `001` as Active and showed a recent completed FIM scan. Treat this as manager-connectivity evidence; a new controlled event must still be confirmed in the dashboard before claiming full end-to-end detection coverage.

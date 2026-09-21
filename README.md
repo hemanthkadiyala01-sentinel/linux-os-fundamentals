@@ -8,10 +8,10 @@ An evidence-first cybersecurity project using Ubuntu WSL2, a local Wazuh deploym
 | --- | --- | --- |
 | Ubuntu WSL2 | Running with systemd | Local read-only command output |
 | Wazuh manager, indexer, dashboard, Filebeat | Expected processes observed | Process and service inventory |
-| Windows Wazuh agent | `WazuhSvc` is Running and Automatic | Local service query |
+| Windows Wazuh agent | Agent `001` is Active; Windows 11 Pro; Wazuh 4.14.7 | Authorized manager query |
 | Authentication baseline | 0 failed-password, 4 PAM failures, 0 accepted-password, 240 sudo events | Retained `auth.log` counts |
 
-End-to-end Windows event ingestion is **unverified**: this account could not read manager logs, registered-agent status, or the protected Windows agent log. See [scope and limitations](docs/lab-scope.md).
+Manager connectivity and a recent endpoint FIM scan are verified. A new controlled Windows event has not yet been confirmed in the dashboard; that separate test remains pending. See [scope and limitations](docs/lab-scope.md).
 
 ## Contents
 

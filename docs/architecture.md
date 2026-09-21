@@ -9,11 +9,7 @@ Wazuh manager --> indexer --> dashboard
 Filebeat ----------------------------------------> indexer
 ```
 
-On 2026-09-21, the Windows Wazuh service was Running/Automatic and the Ubuntu
-host had live Wazuh manager, indexer, dashboard, and Filebeat processes. This
-is component-health evidence only. End-to-end Windows event ingestion was not
-verified because protected manager and agent logs were unavailable to the
-current account.
+On 2026-09-21, the Windows Wazuh service was Running/Automatic and the Ubuntu host had live Wazuh manager, indexer, dashboard, and Filebeat processes. An authorized manager query confirmed Windows agent `001` as Active and recorded a recent file-integrity-monitoring scan. This verifies manager connectivity and endpoint telemetry activity, but not dashboard searchability for a newly generated controlled event.
 
 ## Data minimization
 

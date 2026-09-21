@@ -12,10 +12,8 @@ and Windows endpoint on 2026-09-21.
 - Expected Wazuh and Filebeat processes were observed.
 - The Wazuh manager journal showed successful component startup on 2026-09-21.
 - Windows `WazuhSvc` was Running and configured for Automatic startup.
+- An authorized manager query confirmed Windows agent `001` as Active, with a recent completed file-integrity-monitoring scan.
 
 ## Conclusion
 
-The local platform components and endpoint service were healthy enough to
-justify further authorized telemetry validation. This case does not establish
-agent enrollment or end-to-end event ingestion because protected logs and
-registered-agent status could not be read by the assessment account.
+The local platform, endpoint service, and manager connectivity are verified. This does not yet establish that a newly generated controlled event is indexed and searchable in the dashboard; that is the remaining validation step.
