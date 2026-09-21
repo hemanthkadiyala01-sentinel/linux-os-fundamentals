@@ -1,3 +1,45 @@
+# Defensive Endpoint Monitoring Lab
+
+An evidence-first cybersecurity project using Ubuntu WSL2, a local Wazuh deployment, and a Windows endpoint agent.
+
+## Verified state
+
+| Component | Result | Evidence boundary |
+| --- | --- | --- |
+| Ubuntu WSL2 | Running with systemd | Local read-only command output |
+| Wazuh manager, indexer, dashboard, Filebeat | Expected processes observed | Process and service inventory |
+| Windows Wazuh agent | `WazuhSvc` is Running and Automatic | Local service query |
+| Authentication baseline | 0 failed-password, 4 PAM failures, 0 accepted-password, 240 sudo events | Retained `auth.log` counts |
+
+End-to-end Windows event ingestion is **unverified**: this account could not read manager logs, registered-agent status, or the protected Windows agent log. See [scope and limitations](docs/lab-scope.md).
+
+## Contents
+
+- [Architecture](docs/architecture.md), scope, methodology, and threat model.
+- Read-only [evidence collection](scripts/collection/collect-wazuh-evidence.ps1).
+- Three [threat-hunting exercises](labs/06-threat-hunting/README.md).
+- A completed [authentication investigation](reports/case-001-authentication-baseline/README.md).
+- A documented controlled-test limitation and detection proposal.
+
+## Safe reproduction
+
+```powershell
+.\scripts\collection\collect-wazuh-evidence.ps1
+.\scripts\validation\validate-repository.ps1
+```
+
+The collection script is read-only and writes a redacted local record under `evidence/`, which Git ignores.
+
+## Responsible purpose
+
+This project supports defensive monitoring and harm reduction. It minimizes collection to the data needed for an authorized question, redacts sensitive details, and documents uncertainty instead of turning weak signals into accusations.
+
+## Limitations
+
+This is a local lab, not a production security claim. Logs have finite retention; component health does not prove delivery; and proposed detections need authorized validation before operational use.
+
+<!-- Historical scaffold retained for repository history; superseded by the evidence-first project above.
+
 # 
 
 # \# 🛡️ Linux \& OS Fundamentals
@@ -303,4 +345,5 @@
 # 
 
 # A license will be selected as the project develops.
+-->
 
