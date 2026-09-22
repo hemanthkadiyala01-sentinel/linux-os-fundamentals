@@ -1,43 +1,69 @@
-# Defensive Endpoint Monitoring Lab
+# Linux OS Fundamentals & Defensive Security Lab
 
-An evidence-first cybersecurity project using Ubuntu WSL2, a local Wazuh deployment, and a Windows endpoint agent.
+An evidence-first cybersecurity engineering project built around **Linux system fundamentals, Windows endpoint monitoring, Wazuh telemetry, threat hunting, DFIR-style investigation, and detection engineering**.
 
-## Verified state
+The project uses a local **Ubuntu WSL2 + Wazuh deployment + Windows 11 endpoint** environment to investigate system behavior, collect security-relevant evidence, document findings, and validate detection logic through repeatable tests.
 
-| Component | Result | Evidence boundary |
-| --- | --- | --- |
-| Ubuntu WSL2 | Running with systemd | Local read-only command output |
-| Wazuh manager, indexer, dashboard, Filebeat | Expected processes observed | Process and service inventory |
-| Windows Wazuh agent | Agent `001` is Active; Windows 11 Pro; Wazuh 4.14.7 | Authorized manager query |
-| Authentication baseline | 0 failed-password, 4 PAM failures, 0 accepted-password, 240 sudo events | Retained `auth.log` counts |
+---
 
-Manager connectivity and a recent endpoint FIM scan are verified. A new controlled Windows event has not yet been confirmed in the dashboard; that separate test remains pending. See [scope and limitations](docs/lab-scope.md).
+## Project Overview
 
-## Contents
+This repository documents hands-on security investigations rather than only theoretical exercises.
 
-- [Architecture](docs/architecture.md), scope, methodology, and threat model.
-- Read-only [evidence collection](scripts/collection/collect-wazuh-evidence.ps1).
-- Three [threat-hunting exercises](labs/06-threat-hunting/README.md).
-- A completed [authentication investigation](reports/case-001-authentication-baseline/README.md).
-- A documented controlled-test limitation and detection proposal.
+The work progresses from operating-system fundamentals into practical defensive security:
 
-## Safe reproduction
+**Linux fundamentals → system monitoring → authentication triage → Wazuh → Windows telemetry → threat hunting → investigation → detection engineering**
 
-```powershell
-.\scripts\collection\collect-wazuh-evidence.ps1
-.\scripts\validation\validate-repository.ps1
-```
+The methodology emphasizes:
 
-The collection script is read-only and writes a redacted local record under `evidence/`, which Git ignores.
+- Evidence before conclusions
+- Read-only investigation where practical
+- Reproducible commands and tests
+- Explicit evidence boundaries
+- Authorized local-lab activity
+- Documented uncertainty rather than unsupported attribution
 
-## Responsible purpose
+---
 
-This project supports defensive monitoring and harm reduction. It minimizes collection to the data needed for an authorized question, redacts sensitive details, and documents uncertainty instead of turning weak signals into accusations.
+## Environment
 
-## Limitations
+| Component | Environment |
+|---|---|
+| Linux | Ubuntu WSL2 |
+| Windows Endpoint | Windows 11 Pro |
+| SIEM / XDR Platform | Wazuh |
+| Wazuh Agent | 4.14.7 |
+| Linux Services | systemd, Filebeat, Wazuh Manager, Indexer, Dashboard |
+| Detection Engineering | Python |
+| Windows Investigation | PowerShell |
+| Version Control | Git / GitHub |
 
-This is a local lab, not a production security claim. Logs have finite retention; component health does not prove delivery; and proposed detections need authorized validation before operational use.
+---
 
+## Architecture
+
+```text
+┌──────────────────────────────┐
+│       Windows 11 Endpoint    │
+│                              │
+│  Security / Application Logs │
+│  Sysmon / Endpoint Activity  │
+└──────────────┬───────────────┘
+               │
+               │ Wazuh Agent 001
+               ▼
+┌──────────────────────────────┐
+│       Ubuntu WSL2            │
+│                              │
+│  Wazuh Manager               │
+│  Filebeat                    │
+│  Wazuh Indexer               │
+│  Wazuh Dashboard             │
+└──────────────┬───────────────┘
+               │
+               ▼
+       Investigation &
+       Detection Workflow
 <!-- Historical scaffold retained for repository history; superseded by the evidence-first project above.
 
 # 
