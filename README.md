@@ -32,6 +32,42 @@ The goal is not to manufacture malicious activity or overstate findings. The goa
 
 ---
 
+## What I Demonstrated
+
+This project demonstrates an evidence-first security monitoring and investigation workflow across Linux and Windows environments.
+
+### Endpoint Visibility
+
+- Linux system and process investigation
+- Windows endpoint monitoring
+- Wazuh agent and manager validation
+- Security telemetry collection and verification
+- Operating-system logs and endpoint data analysis
+
+### Security Investigation
+
+- Authentication and log analysis
+- Process and service investigation
+- Windows endpoint investigation
+- Evidence collection and preservation
+- Correlation of related security observations
+- Threat-hunting methodology
+- Documentation of investigation findings and limitations
+
+### Detection Engineering
+
+- Translation of a documented detection concept into Python logic
+- Separation of detection logic from production-deployment claims
+- Testing of expected detection conditions
+- Testing of conditions that should not trigger detection
+- Repository and detection validation
+
+The project connects these activities into a single workflow:
+
+> Collect telemetry → preserve evidence → investigate → document findings → create detection logic → test the detection.
+
+---
+
 ## Project Objectives
 
 The project was designed to build practical capability across three connected areas:
@@ -52,21 +88,21 @@ Translate a documented detection concept into tested Python logic while keeping 
 
 ## Lab Environment
 
-| Component | Environment |
-|---|---|
-| Host OS | Windows 11 Pro |
-| Linux environment | Ubuntu WSL2 |
-| Security platform | Wazuh |
-| Windows endpoint | Windows 11 Pro |
-| Wazuh Agent | 001 - Windows-SOC-Lab |
-| Wazuh version | 4.14.7 on Windows agent |
-| Manager | Ubuntu WSL2 |
-| Indexer | Wazuh/OpenSearch |
-| Dashboard | Wazuh Dashboard |
-| Filebeat | Wazuh Filebeat |
-| Detection logic | Python |
-| Test framework | Python unittest |
-| Version control | Git / GitHub |
+| Component         | Environment             |
+| ----------------- | ----------------------- |
+| Host OS           | Windows 11 Pro          |
+| Linux environment | Ubuntu WSL2             |
+| Security platform | Wazuh                   |
+| Windows endpoint  | Windows 11 Pro          |
+| Wazuh Agent       | 001 - Windows-SOC-Lab   |
+| Wazuh version     | 4.14.7 on Windows agent |
+| Manager           | Ubuntu WSL2             |
+| Indexer           | Wazuh/OpenSearch        |
+| Dashboard         | Wazuh Dashboard         |
+| Filebeat          | Wazuh Filebeat          |
+| Detection logic   | Python                  |
+| Test framework    | Python unittest         |
+| Version control   | Git / GitHub            |
 
 This is a local authorized laboratory environment and is not presented as a production SOC deployment.
 
@@ -110,4 +146,3 @@ Windows
   +-- Sysmon
   +-- Wazuh Agent
   +-- File Integrity Monitoring
-```
