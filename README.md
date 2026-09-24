@@ -1,186 +1,375 @@
-# Linux & Windows Security Monitoring Lab
+# Linux OS Fundamentals & Defensive Security Lab
 
-An evidence-first cybersecurity engineering lab focused on Linux administration, Windows endpoint monitoring, Wazuh-based telemetry collection, threat hunting, incident investigation, and tested detection logic.
+An evidence-first cybersecurity engineering project built around **Linux system fundamentals, Windows endpoint monitoring, Wazuh telemetry, threat hunting, DFIR-style investigation, and detection engineering**.
 
-This project documents hands-on security investigations performed in an authorized local lab using Ubuntu WSL2, Windows 11, and Wazuh.
+The project uses a local **Ubuntu WSL2 + Wazuh deployment + Windows 11 endpoint** environment to investigate system behavior, collect security-relevant evidence, document findings, and validate detection logic through repeatable tests.
 
 ---
 
 ## Project Overview
 
-This repository is a practical security engineering and investigation environment built to develop and demonstrate skills in:
+This repository documents hands-on security investigations rather than only theoretical exercises.
 
-- Linux process and system investigation
-- Linux file permissions and access control
-- Users, groups, UID/GID, and privilege boundaries
-- Authentication and log analysis
-- systemd service investigation
-- Windows endpoint monitoring
-- Wazuh agent and manager validation
-- Security telemetry verification
-- Threat hunting
-- Endpoint investigation
-- Detection engineering
-- Evidence-driven incident analysis
-- Security documentation and investigation reporting
+The work progresses from operating-system fundamentals into practical defensive security:
 
-The project follows an evidence-first principle:
+**Linux fundamentals → system monitoring → authentication triage → Wazuh → Windows telemetry → threat hunting → investigation → detection engineering**
 
-> Collect evidence → validate observations → document findings → state limitations → avoid unsupported conclusions.
+The methodology emphasizes:
 
-The goal is not to manufacture malicious activity or overstate findings. The goal is to demonstrate how a security analyst investigates what the available telemetry actually supports.
+- Evidence before conclusions
+- Read-only investigation where practical
+- Reproducible commands and tests
+- Explicit evidence boundaries
+- Authorized local-lab activity
+- Documented uncertainty rather than unsupported attribution
 
 ---
 
-## What I Demonstrated
+## Environment
 
-This project demonstrates an evidence-first security monitoring and investigation workflow across Linux and Windows environments.
-
-### Endpoint Visibility
-
-- Linux system and process investigation
-- Windows endpoint monitoring
-- Wazuh agent and manager validation
-- Security telemetry collection and verification
-- Operating-system logs and endpoint data analysis
-
-### Security Investigation
-
-- Authentication and log analysis
-- Process and service investigation
-- Windows endpoint investigation
-- Evidence collection and preservation
-- Correlation of related security observations
-- Threat-hunting methodology
-- Documentation of investigation findings and limitations
-
-### Detection Engineering
-
-- Translation of a documented detection concept into Python logic
-- Separation of detection logic from production-deployment claims
-- Testing of expected detection conditions
-- Testing of conditions that should not trigger detection
-- Repository and detection validation
-
-The project connects these activities into a single workflow:
-
-> Collect telemetry → preserve evidence → investigate → document findings → create detection logic → test the detection.
-
----
-
-## Project Objectives
-
-The project was designed to build practical capability across three connected areas:
-
-### 1. Endpoint Visibility
-
-Establish visibility into Linux and Windows systems through operating-system telemetry and Wazuh.
-
-### 2. Security Investigation
-
-Use logs, process information, service state, authentication records, and endpoint telemetry to investigate suspicious or security-relevant activity.
-
-### 3. Detection Engineering
-
-Translate a documented detection concept into tested Python logic while keeping the implementation separate from claims about a production Wazuh deployment.
-
----
-
-## Lab Environment
-
-| Component         | Environment             |
-| ----------------- | ----------------------- |
-| Host OS           | Windows 11 Pro          |
-| Linux environment | Ubuntu WSL2             |
-| Security platform | Wazuh                   |
-| Windows endpoint  | Windows 11 Pro          |
-| Wazuh Agent       | 001 - Windows-SOC-Lab   |
-| Wazuh version     | 4.14.7 on Windows agent |
-| Manager           | Ubuntu WSL2             |
-| Indexer           | Wazuh/OpenSearch        |
-| Dashboard         | Wazuh Dashboard         |
-| Filebeat          | Wazuh Filebeat          |
-| Detection logic   | Python                  |
-| Test framework    | Python unittest         |
-| Version control   | Git / GitHub            |
-
-This is a local authorized laboratory environment and is not presented as a production SOC deployment.
+| Component | Environment |
+|---|---|
+| Linux | Ubuntu WSL2 |
+| Windows Endpoint | Windows 11 Pro |
+| SIEM / XDR Platform | Wazuh |
+| Wazuh Agent | 4.14.7 |
+| Linux Services | systemd, Filebeat, Wazuh Manager, Indexer, Dashboard |
+| Detection Engineering | Python |
+| Windows Investigation | PowerShell |
+| Version Control | Git / GitHub |
 
 ---
 
 ## Architecture
 
 ```text
-                    Windows 11 Endpoint
-                    -------------------
-                    Wazuh Agent 001
-                           |
-                           | Security telemetry
-                           v
-                    Ubuntu WSL2
-                    ------------
-                    Wazuh Manager
-                           |
-             +-------------+-------------+
-             |                           |
-             v                           v
-       Wazuh Indexer              Wazuh Dashboard
-             |
-             v
-          Filebeat
+┌──────────────────────────────┐
+│       Windows 11 Endpoint    │
+│                              │
+│  Security / Application Logs │
+│  Sysmon / Endpoint Activity  │
+└──────────────┬───────────────┘
+               │
+               │ Wazuh Agent 001
+               ▼
+┌──────────────────────────────┐
+│       Ubuntu WSL2            │
+│                              │
+│  Wazuh Manager               │
+│  Filebeat                    │
+│  Wazuh Indexer               │
+│  Wazuh Dashboard             │
+└──────────────┬───────────────┘
+               │
+               ▼
+       Investigation &
+       Detection Workflow
+<!-- Historical scaffold retained for repository history; superseded by the evidence-first project above.
 
-Additional investigation sources:
+# 
 
-Linux
-  |
-  +-- ps / pstree
-  +-- /proc
-  +-- systemd
-  +-- auth.log
-  +-- journald
-  +-- users / groups / permissions
+# \# 🛡️ Linux \& OS Fundamentals
 
-Windows
-  |
-  +-- Event Logs
-  +-- Sysmon
-  +-- Wazuh Agent
-  +-- File Integrity Monitoring
----
+# 
 
-## Final Project Status
+# > A practical cybersecurity engineering learning repository focused on Linux, operating systems, process analysis, memory concepts, and security-relevant system behavior.
 
-**Status: COMPLETE**
+# 
 
-The Linux OS Fundamentals & Defensive Security Lab has completed its initial implementation and investigation phase.
+# !\[Status](https://img.shields.io/badge/Status-In%20Progress-orange)
 
-The project established a working Wazuh-based endpoint monitoring environment and validated Windows endpoint telemetry through an authorized local SOC lab.
+# !\[Focus](https://img.shields.io/badge/Focus-Cybersecurity-blue)
 
-The final investigation examined an observed PcaSvc -> sdbinst.exe execution and attempted to correlate the activity with Windows Update telemetry. No Windows Update Operational events were present during the investigated 01:43-01:45 window on September 21, 2026. Security Event ID 4688 was also unavailable because Windows Process Creation auditing was disabled.
+# !\[Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey)
 
-Therefore, a direct Windows Update correlation could not be established. The project records this as an evidence-bounded finding rather than making an unsupported attribution.
+# 
 
-### Final Milestones
+# \---
 
-- [x] Linux / WSL2 environment established
-- [x] Wazuh Manager deployed
-- [x] Wazuh Indexer deployed
-- [x] Wazuh Dashboard deployed
-- [x] Windows 11 endpoint connected
-- [x] Wazuh Windows Agent validated
-- [x] Endpoint telemetry pipeline validated
-- [x] SOC investigation performed
-- [x] PcaSvc -> sdbinst.exe activity investigated
-- [x] Windows Update correlation attempted
-- [x] Evidence limitations identified
-- [x] Final investigation conclusion documented
-- [x] Project phase completed
+# 
 
-### Final Investigation
+# \## 📌 About This Project
 
-See:
+# 
 
-investigations/2026-09-21-pcasvc-sdbinst-investigation.md
+# This repository documents my hands-on learning journey in Linux and operating system fundamentals for cybersecurity engineering.
 
-**Final status: COMPLETE**
+# 
+
+# The objective is to understand how operating systems manage processes, memory, permissions, system calls, and system resources, and how this knowledge supports security monitoring, digital forensics, incident response, and security research.
+
+# 
+
+# This project is developed incrementally through practical labs, technical documentation, scripts, and verified observations.
+
+# 
+
+# \---
+
+# 
+
+# \## 🎯 Learning Objectives
+
+# 
+
+# \- Build strong Linux command-line fundamentals.
+
+# \- Understand processes and process memory.
+
+# \- Study virtual memory and memory mappings.
+
+# \- Understand Linux file permissions and ownership.
+
+# \- Explore system calls and system tracing.
+
+# \- Develop basic system analysis scripts.
+
+# \- Document technical findings clearly.
+
+# \- Connect operating system concepts to cybersecurity operations.
+
+# 
+
+# \---
+
+# 
+
+# \## 🧪 Learning Modules
+
+# 
+
+# | Module | Description | Status |
+
+# |---|---|---|
+
+# | Linux Command Line | Files, directories, processes, and system commands | Planned |
+
+# | Process Analysis | Process identification and resource inspection | Planned |
+
+# | Memory Analysis | Virtual memory regions and permissions | Planned |
+
+# | File Permissions | Ownership, permissions, and access control | Planned |
+
+# | System Calls | Understanding system interactions | Planned |
+
+# | System Tracing | Observing program behavior in a lab | Planned |
+
+# | Security Documentation | Technical reports and observations | Planned |
+
+# 
+
+# > Module statuses will be updated as each lab is completed and verified.
+
+# 
+
+# \---
+
+# 
+
+# \## 🏗️ Repository Structure
+
+# 
+
+# ```text
+
+# linux-os-fundamentals/
+
+# │
+
+# ├── README.md
+
+# ├── labs/
+
+# │   ├── 01-process-memory/
+
+# │   ├── 02-linux-permissions/
+
+# │   └── 03-system-calls/
+
+# │
+
+# ├── scripts/
+
+# ├── docs/
+
+# ├── reports/
+
+# ├── screenshots/
+
+# └── tests/
+
+# ```
+
+# 
+
+# \---
+
+# 
+
+# \## 🔬 Practical Labs
+
+# 
+
+# Each lab will include:
+
+# 
+
+# 1\. Objective
+
+# 2\. Lab environment
+
+# 3\. Tools and commands
+
+# 4\. Procedure
+
+# 5\. Observations
+
+# 6\. Technical explanation
+
+# 7\. Cybersecurity relevance
+
+# 8\. Limitations
+
+# 9\. References, where applicable
+
+# 
+
+# The labs will be performed only on local systems or authorized environments.
+
+# 
+
+# \---
+
+# 
+
+# \## 🔐 Cybersecurity Relevance
+
+# 
+
+# Understanding operating systems helps cybersecurity practitioners analyze:
+
+# 
+
+# \- Process behavior
+
+# \- Suspicious system activity
+
+# \- File and access permissions
+
+# \- System resource usage
+
+# \- Memory mappings
+
+# \- System calls
+
+# \- Evidence relevant to security investigations
+
+# 
+
+# The repository focuses on defensive learning, responsible security research, and authorized experimentation.
+
+# 
+
+# \---
+
+# 
+
+# \## 🛠️ Tools and Technologies
+
+# 
+
+# The tools and technologies used in each lab will be documented as the project develops.
+
+# 
+
+# Planned areas include:
+
+# 
+
+# \- Linux
+
+# \- Windows PowerShell
+
+# \- Python
+
+# \- Bash
+
+# \- Git and GitHub
+
+# \- Process and system analysis utilities
+
+# 
+
+# \---
+
+# 
+
+# \## 📈 Project Progress
+
+# 
+
+# | Area | Status |
+
+# |---|---|
+
+# | Repository setup | Completed |
+
+# | Initial documentation | In Progress |
+
+# | Linux fundamentals | Planned |
+
+# | Process and memory labs | Planned |
+
+# | Security-focused documentation | Planned |
+
+# | Automated tests | Planned |
+
+# 
+
+# \---
+
+# 
+
+# \## 👨‍💻 About Me
+
+# 
+
+# \*\*Hemanth Kadiyala\*\*
+
+# 
+
+# Cybersecurity Engineering Student building practical skills in security monitoring, threat detection, DFIR, Linux, networking, and security automation.
+
+# 
+
+# I focus on learning through implementation, testing, documentation, and responsible security research.
+
+# 
+
+# \---
+
+# 
+
+# \## ⚠️ Responsible Use
+
+# 
+
+# All activities in this repository are intended for educational, defensive, and authorized security purposes.
+
+# 
+
+# Do not use the techniques or tools documented here against systems without explicit permission.
+
+# 
+
+# \---
+
+# 
+
+# \## 📄 License
+
+# 
+
+# A license will be selected as the project develops.
+-->
 
