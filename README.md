@@ -146,3 +146,41 @@ Windows
   +-- Sysmon
   +-- Wazuh Agent
   +-- File Integrity Monitoring
+---
+
+## Final Project Status
+
+**Status: COMPLETE**
+
+The Linux OS Fundamentals & Defensive Security Lab has completed its initial implementation and investigation phase.
+
+The project established a working Wazuh-based endpoint monitoring environment and validated Windows endpoint telemetry through an authorized local SOC lab.
+
+The final investigation examined an observed PcaSvc -> sdbinst.exe execution and attempted to correlate the activity with Windows Update telemetry. No Windows Update Operational events were present during the investigated 01:43-01:45 window on September 21, 2026. Security Event ID 4688 was also unavailable because Windows Process Creation auditing was disabled.
+
+Therefore, a direct Windows Update correlation could not be established. The project records this as an evidence-bounded finding rather than making an unsupported attribution.
+
+### Final Milestones
+
+- [x] Linux / WSL2 environment established
+- [x] Wazuh Manager deployed
+- [x] Wazuh Indexer deployed
+- [x] Wazuh Dashboard deployed
+- [x] Windows 11 endpoint connected
+- [x] Wazuh Windows Agent validated
+- [x] Endpoint telemetry pipeline validated
+- [x] SOC investigation performed
+- [x] PcaSvc -> sdbinst.exe activity investigated
+- [x] Windows Update correlation attempted
+- [x] Evidence limitations identified
+- [x] Final investigation conclusion documented
+- [x] Project phase completed
+
+### Final Investigation
+
+See:
+
+investigations/2026-09-21-pcasvc-sdbinst-investigation.md
+
+**Final status: COMPLETE**
+
