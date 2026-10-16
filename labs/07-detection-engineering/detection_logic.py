@@ -235,6 +235,14 @@ def should_alert(
             if suspicious is None:
                 continue
 
+            # Count only failures that occurred before the suspicious success.
+            failure_count = sum(
+                event["_time"] < suspicious["_time"]
+                for event in window_failures
+            )
+            if failure_count <= baseline:
+                continue
+
             alerts.append(
                 {
                     "account": account,

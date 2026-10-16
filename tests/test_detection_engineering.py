@@ -240,6 +240,24 @@ class DetectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.detect(events)
 
+    def test_failure_count_excludes_failures_after_suspicious_success(self):
+        events = make_failures(5)
+        events.append(
+            make_event(
+                "2026-09-22T10:10:00",
+                outcome="success",
+                command="unknown-command",
+            )
+        )
+        events.extend([
+            make_event("2026-09-22T10:20:00"),
+            make_event("2026-09-22T10:25:00"),
+        ])
+
+        alerts = self.detect(events)
+
+        self.assertEqual(len(alerts), 1)
+        self.assertEqual(alerts[0]["failure_count"], 5)
 
 if __name__ == "__main__":
     unittest.main()
