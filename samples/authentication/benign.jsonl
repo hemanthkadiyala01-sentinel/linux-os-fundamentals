@@ -1,0 +1,4 @@
+{"timestamp":"2026-10-16T10:00:00Z","account":"analyst1","process":"sudo","outcome":"failure","event_text":"authentication failure"}
+{"timestamp":"2026-10-16T10:01:00Z","account":"analyst1","process":"sudo","outcome":"failure","event_text":"authentication failure"}
+{"timestamp":"2026-10-16T10:02:00Z","account":"analyst1","process":"sudo","outcome":"failure","event_text":"authentication failure"}
+{"timestamp":"2026-10-16T10:05:00Z","account":"analyst1","process":"sudo","outcome":"success","command":"unknown-command","event_text":"synthetic successful command"}
