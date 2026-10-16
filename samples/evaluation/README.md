@@ -1,26 +1,47 @@
 # Synthetic Authentication Evaluation Corpus
 
-This dataset contains 11 manually designed synthetic scenarios for
-evaluating the repository's sudo detection rule.
+This corpus contains 26 labeled, manually constructed scenarios
+for the repository's sudo detection rule.
 
-- 4 scenarios expect an alert under the current rule.
-- 7 scenarios expect no alert under the current rule.
+## Activity labels
 
-## Schema
+- `suspicious`: scenario context is intended to represent suspicious
+  activity relevant to this detection use case.
+- `benign`: scenario context says the activity is authorized, routine,
+  or a controlled benign test.
+- `ambiguous`: the available events do not support a reliable benign
+  or suspicious judgment. These cases are excluded from activity-label
+  classification metrics.
 
-Each scenario contains:
-- `scenario_id`: stable identifier
-- `description`: purpose of the scenario
-- `expected_alert`: expected result from the implemented rule
-- `events`: synthetic input events
+## Corpus summary
 
-## Important interpretation
+| Activity label | Scenarios |
+|---|---:|
+| Suspicious | 10 |
+| Benign | 11 |
+| Ambiguous | 5 |
+| Total | 26 |
 
-These labels specify expected rule behavior for these constructed
-test cases. They do not establish whether any real-world activity
-is malicious.
+`expected_alert` is a separate rule-regression expectation. It means
+what the current detection rule is expected to output for the supplied
+events; it does not mean the activity is truly malicious.
 
-The dataset is small and intentionally designed around known rule
-conditions. Results from this corpus must not be presented as
-real-world detection accuracy or as a representative estimate of
-false-positive or false-negative rates.
+Each scenario includes a `labeling_rationale` describing why the
+activity label was assigned and why the rule should or should not alert.
+
+## Evaluation interpretation
+
+Two results are kept separate:
+
+1. Rule-regression agreement: actual output versus `expected_alert`.
+2. Activity-label metrics: actual alerts versus the scenario's benign
+   or suspicious contextual label, excluding ambiguous scenarios.
+
+This distinction matters. An authorized but non-allowlisted command
+can trigger a rule alert, producing a context-driven false positive.
+A suspicious scenario with missing telemetry can fail to trigger an
+alert, producing a false negative.
+
+The dataset is small, manually designed, and not representative of
+production traffic. It must not be used to claim real-world accuracy,
+operational false-positive rates, or generalization to unseen attacks.

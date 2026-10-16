@@ -332,8 +332,9 @@ A successful workflow verifies the checks configured for that specific commit. A
 
 ## Synthetic Detection Evaluation
 
-The repository includes a labeled synthetic corpus to evaluate the
-implemented sudo detection rule against predefined scenarios.
+The repository evaluates the implemented sudo detection rule against a
+labeled synthetic corpus. Each scenario includes an activity label and
+a rationale explaining the expected interpretation.
 
 ### Run the evaluation
 
@@ -341,44 +342,75 @@ implemented sudo detection rule against predefined scenarios.
 python scripts/evaluation/evaluate_detection.py
 ```
 
-The evaluator reports scenario-level matches, a confusion matrix,
-and the following metrics:
+### Dataset composition
 
-- Accuracy
-- Precision
-- Recall
-- Specificity
-- F1 score
+| Activity label | Scenarios |
+|---|---:|
+| Suspicious | 10 |
+| Benign | 11 |
+| Ambiguous | 5 |
+| Total | 26 |
 
-### Current synthetic evaluation
+Ambiguous scenarios are retained for rule-regression testing but excluded
+from benign-versus-suspicious classification metrics.
 
-The initial corpus contains 11 manually designed scenarios:
+### Rule-regression results
+
+The current detector matched the expected rule output for all 26 scenarios.
 
 | Result | Count |
 |---|---:|
-| True positives | 4 |
-| False positives | 0 |
-| True negatives | 7 |
-| False negatives | 0 |
+| Matched scenarios | 26 |
+| Mismatched scenarios | 0 |
+| Agreement rate | 100% |
 
-All 11 scenarios matched their expected rule outcomes. The calculated
-metrics were 1.0 for accuracy, precision, recall, specificity, and
-F1 score.
+This checks implementation consistency against the expected output
+defined for each scenario. It does not independently prove that the
+activity labels are correct.
+
+### Activity-label evaluation
+
+The activity-label evaluation includes 21 scenarios: 10 suspicious and
+11 benign. Five ambiguous scenarios are excluded.
+
+| Result | Count |
+|---|---:|
+| True positives | 8 |
+| False positives | 1 |
+| True negatives | 10 |
+| False negatives | 2 |
+
+| Metric | Result |
+|---|---:|
+| Accuracy | 85.71% |
+| Precision | 88.89% |
+| Recall | 80.00% |
+| Specificity | 90.91% |
+| F1 score | 84.21% |
+
+### What the results reveal
+
+- **One false positive:** an authorized maintenance command is absent
+  from the detector's allowlist. The rule sees the event sequence but
+  does not receive the authorization context.
+- **Two false negatives:** one suspicious scenario has an unobserved
+  failure, while another has its successful command outside the rule's
+  qualifying time window.
+- **Five ambiguous scenarios:** these do not provide enough context for
+  reliable benign-versus-suspicious classification, so they are excluded
+  from the activity-label metrics.
 
 ### Interpretation and limitations
 
-These results describe consistency with the predefined labels in a
-small, manually constructed synthetic dataset. They are not estimates
-of real-world detection accuracy, operational false-positive rates,
-or performance against previously unseen attacks.
+The corpus is manually constructed and intentionally small. Its labels
+describe the context of synthetic scenarios, not verified real-world
+incidents. The reported metrics are useful for understanding this rule's
+behavior on these examples, but they are not estimates of production
+accuracy or performance against unseen attacks.
 
-The scenario labels specify expected behavior of this rule. They do
-not independently establish whether activity would be malicious in
-a real environment.
-
-Additional evaluation should introduce broader benign and suspicious
-scenarios, document labeling criteria, and test against cases that
-were not used while designing the detection logic.
+A stronger future evaluation should use broader independently reviewed
+scenarios, documented labeling criteria, and test cases kept separate
+from those used while designing the detector.
 
 ## Detection Methodology
 
