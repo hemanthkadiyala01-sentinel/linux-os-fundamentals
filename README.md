@@ -330,6 +330,56 @@ A successful workflow verifies the checks configured for that specific commit. A
 
 ---
 
+## Synthetic Detection Evaluation
+
+The repository includes a labeled synthetic corpus to evaluate the
+implemented sudo detection rule against predefined scenarios.
+
+### Run the evaluation
+
+```bash
+python scripts/evaluation/evaluate_detection.py
+```
+
+The evaluator reports scenario-level matches, a confusion matrix,
+and the following metrics:
+
+- Accuracy
+- Precision
+- Recall
+- Specificity
+- F1 score
+
+### Current synthetic evaluation
+
+The initial corpus contains 11 manually designed scenarios:
+
+| Result | Count |
+|---|---:|
+| True positives | 4 |
+| False positives | 0 |
+| True negatives | 7 |
+| False negatives | 0 |
+
+All 11 scenarios matched their expected rule outcomes. The calculated
+metrics were 1.0 for accuracy, precision, recall, specificity, and
+F1 score.
+
+### Interpretation and limitations
+
+These results describe consistency with the predefined labels in a
+small, manually constructed synthetic dataset. They are not estimates
+of real-world detection accuracy, operational false-positive rates,
+or performance against previously unseen attacks.
+
+The scenario labels specify expected behavior of this rule. They do
+not independently establish whether activity would be malicious in
+a real environment.
+
+Additional evaluation should introduce broader benign and suspicious
+scenarios, document labeling criteria, and test against cases that
+were not used while designing the detection logic.
+
 ## Detection Methodology
 
 The authentication detection example uses an explicit configuration for the failure baseline, time window, and approved commands.

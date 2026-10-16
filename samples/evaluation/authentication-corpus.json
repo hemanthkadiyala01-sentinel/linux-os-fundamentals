@@ -1,0 +1,551 @@
+[
+  {
+    "scenario_id": "threshold-then-command",
+    "description": "Five sudo failures followed by an unapproved command.",
+    "expected_alert": true,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:10:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "six-failures-then-command",
+    "description": "Six sudo failures followed by an unapproved successful command.",
+    "expected_alert": true,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:05:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:06:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "event-text-command-fallback",
+    "description": "Command is extracted from event text when no structured command exists.",
+    "expected_alert": true,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:10:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "sudo COMMAND=unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "timezone-offset-normalization",
+    "description": "Five failures and a success expressed with different UTC offsets.",
+    "expected_alert": true,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00+00:00",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00+00:00",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00+00:00",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00+00:00",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00+00:00",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T15:40:00+05:30",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "below-threshold",
+    "description": "Four failures do not exceed the baseline of four.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:05:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "command-before-failures",
+    "description": "The successful command occurs before the failure sequence.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-16T09:59:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      },
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      }
+    ]
+  },
+  {
+    "scenario_id": "command-before-threshold-crossed",
+    "description": "The command occurs before the fifth failure crosses the threshold.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:30Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "approved-command",
+    "description": "The successful command matches the approved-command list.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:10:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "systemctl status ssh"
+      }
+    ]
+  },
+  {
+    "scenario_id": "command-outside-window",
+    "description": "The successful command occurs after the configured time window.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T11:05:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "non-sudo-failures",
+    "description": "Five failures from another process do not count as sudo failures.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst1",
+        "process": "login",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst1",
+        "process": "login",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst1",
+        "process": "login",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:03:00Z",
+        "account": "analyst1",
+        "process": "login",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:04:00Z",
+        "account": "analyst1",
+        "process": "login",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:10:00Z",
+        "account": "analyst1",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  },
+  {
+    "scenario_id": "account-isolation",
+    "description": "Failures from two accounts do not combine to cross the baseline.",
+    "expected_alert": false,
+    "events": [
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst-a",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst-a",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:02:00Z",
+        "account": "analyst-a",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:00:00Z",
+        "account": "analyst-b",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:01:00Z",
+        "account": "analyst-b",
+        "process": "sudo",
+        "outcome": "failure",
+        "event_text": "synthetic authentication failure"
+      },
+      {
+        "timestamp": "2026-10-16T10:10:00Z",
+        "account": "analyst-b",
+        "process": "sudo",
+        "outcome": "success",
+        "event_text": "synthetic successful command",
+        "command": "unexpected-tool"
+      }
+    ]
+  }
+]
